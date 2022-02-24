@@ -10,12 +10,6 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 
-enum UserStatus : string{
-   case Active = "active";
-   case DeActive = "deactive";
-}
-
-
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -50,12 +44,5 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'name' => Name::class,
-        'status' => UserStatus::class
     ];
-
-
-    public function posts()
-    {
-        return $this->hasMany(Post::class);
-    }
 }
