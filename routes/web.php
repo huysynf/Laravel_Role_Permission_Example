@@ -20,22 +20,12 @@ Route::get('/', function () {
 });
 
 
-Route::controller(UserController::class)->prefix('users')->group(function () {
-    Route::get('/',  'index');
-    Route::get('/{id}',  'show');
-    Route::get('/create',  'create');
-    Route::post('/', 'store');
-    Route::get('/{id}/edit',  'edit');
-    Route::put('/{id}/update', 'update');
-    Route::delete('/{id}',  'destroy');
+Route::prefix('users')->group(function () {
+    Route::get('/', [UserController::class, 'index']);
+    Route::get('/{id}', [UserController::class, 'show']);
+    Route::get('/create', [UserController::class, 'create']);
+    Route::post('/', [UserController::class, 'store']);
+    Route::get('/{id}/edit', [UserController::class, 'edit']);
+    Route::put('/{id}/update', [UserController::class, 'update']);
+    Route::delete('/{id}', [UserController::class, 'destroy']);
 });
-
-Route::scopeBindings()->group(function (){
-    Route::get('users/{user}/posts/{post}', function (\App\Models\User $user, \App\Models\Post $post){
-        return $post;
-    });
-});
-
-//Route::get('users/{user}/posts/{post}', function (\App\Models\User $user, \App\Models\Post $post){
-//   return $post;
-//})->scopeBindings();
