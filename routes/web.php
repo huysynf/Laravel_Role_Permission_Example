@@ -15,8 +15,7 @@ use App\Http\Controllers\UserController;
 */
 
 Route::get('/', function () {
-    echo "helo";
-//    return view('welcome');
+   return view('welcome');
 });
 
 
@@ -29,3 +28,7 @@ Route::prefix('users')->group(function () {
     Route::put('/{id}/update', [UserController::class, 'update']);
     Route::delete('/{id}', [UserController::class, 'destroy']);
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

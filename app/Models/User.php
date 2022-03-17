@@ -43,6 +43,47 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'name' => Name::class,
     ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function roles():\Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
+    /**
+     * @param $roleName
+     * @return mixed
+     */
+    public function hasRole($roleName):bool
+    {
+        return $this->roles->contains('name', $roleName);
+    }
+
+    /**
+     * @param $permissionName
+     * @return bool
+     */
+    public function hasPermission($permissionName):bool
+    {
+        $roles = $this->roles;
+        foreach ($roles as $role)
+        {
+            if ($role->hasPermission($permissionName)) return true;
+        }
+
+        return  false;
+    }
+
+    /**
+     * @param $roleNames
+     * @return mixed
+     */
+
+    public function hasRoles($roleNames):bool
+    {
+        return $this->roles->contains(fn($role) => in_array($role->name, $roleNames));
+    }
 }

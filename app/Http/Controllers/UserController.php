@@ -34,9 +34,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        Post::create($request->all());
 
-        return to_route('users.index');
     }
 
     /**
