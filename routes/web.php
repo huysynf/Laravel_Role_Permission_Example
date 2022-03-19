@@ -19,14 +19,15 @@ Route::get('/', function () {
 });
 
 
-Route::prefix('users')->group(function () {
-    Route::get('/', [UserController::class, 'index']);
-    Route::get('/{id}', [UserController::class, 'show']);
-    Route::get('/create', [UserController::class, 'create']);
-    Route::post('/', [UserController::class, 'store']);
-    Route::get('/{id}/edit', [UserController::class, 'edit']);
-    Route::put('/{id}/update', [UserController::class, 'update']);
-    Route::delete('/{id}', [UserController::class, 'destroy']);
+Route::prefix('users')->name('users.')->group(function () {
+    Route::get('/', [UserController::class, 'index'])->name('index');
+    Route::get('/create', [UserController::class, 'create'])->name('create');
+
+    Route::get('/{id}', [UserController::class, 'show'])->name('show');
+    Route::post('/', [UserController::class, 'store'])->name('store');
+    Route::get('/{id}/edit', [UserController::class, 'edit'])->name('edit');
+    Route::put('/{id}/update', [UserController::class, 'update'])->name('update');
+    Route::delete('/{id}', [UserController::class, 'destroy'])->name('destroy');
 });
 
 Auth::routes();
