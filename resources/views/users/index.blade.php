@@ -22,7 +22,9 @@
                     <td>{{$user->name}}</td>
                     <td>{{$user->email}}</td>
                     <td>
+                        @hasRole('manage-user')
                         <a href="{{route('users.edit', $user->id)}}" class="btn btn-warning border-5">Edit</a>
+                        @endhasRole
                         <form action="{{route('users.destroy', $user->id)}}" method="post" id="DeleteForm-{{$user->id}}">@csrf() @method('delete')</form>
                         <button class="btn btn-danger border-5" type="submit" form="DeleteForm-{{$user->id}}">Delete</button>
                     </td>

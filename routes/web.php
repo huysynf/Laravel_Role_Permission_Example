@@ -19,8 +19,8 @@ Route::get('/', function () {
 });
 
 
-Route::prefix('users')->name('users.')->group(function () {
-    Route::get('/', [UserController::class, 'index'])->name('index');
+Route::prefix('users')->name('users.')->middleware('auth')->group(function () {
+    Route::get('/', [UserController::class, 'index'])->name('index')->middleware('check.permission:create-user');
     Route::get('/create', [UserController::class, 'create'])->name('create');
 
     Route::get('/{id}', [UserController::class, 'show'])->name('show');

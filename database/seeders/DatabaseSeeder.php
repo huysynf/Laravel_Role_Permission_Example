@@ -28,7 +28,7 @@ class DatabaseSeeder extends Seeder
         $permissionDeleteUser = Permission:: updateOrCreate(['name' => 'delete-user'], [ 'display_name' => 'Xóa người dùng']);
 
 
-        $roleUser->asignPermissions([$permissionCreateUser->id, $permissionUpdateUser->id, $permissionShowUser->id, $permissionDeleteUser->id]);
+        $roleManageUser->permissions()->attach([$permissionCreateUser->id, $permissionUpdateUser->id, $permissionShowUser->id, $permissionDeleteUser->id]);
 
         $admin = User::whereEmail('admin@gmail.com')->first();
 

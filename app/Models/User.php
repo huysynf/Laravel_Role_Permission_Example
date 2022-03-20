@@ -53,37 +53,27 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class);
     }
 
-    /**
-     * @param $roleName
-     * @return mixed
-     */
-    public function hasRole($roleName):bool
+
+    public function hasRole($roleName)
     {
         return $this->roles->contains('name', $roleName);
     }
 
-    /**
-     * @param $permissionName
-     * @return bool
-     */
-    public function hasPermission($permissionName):bool
+    public function hasPermission($permissionName)
     {
         $roles = $this->roles;
-        foreach ($roles as $role)
-        {
-            if ($role->hasPermission($permissionName)) return true;
+
+        foreach ($roles as $role) {
+            if ($role->hasPermission($permissionName)) {
+                return true;
+            }
         }
-
-        return  false;
+        return false;
     }
 
-    /**
-     * @param $roleNames
-     * @return mixed
-     */
-
-    public function hasRoles($roleNames):bool
+    public function isSupperAdmin()
     {
-        return $this->roles->contains(fn($role) => in_array($role->name, $roleNames));
+        return $this->hasRole('admin');
     }
+
 }
